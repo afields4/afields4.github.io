@@ -11771,54 +11771,51 @@ div#notebook {
   <div tabindex="-1" id="notebook" class="border-box-sizing">
     <div class="container" id="notebook-container">
 
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Analysis of head eSports MOBA phenomenon: League of Legends</p>
+<p>Welcome to Data Science Rift</p>
+<p>We will be walking through some of the basics of collecting, cleaning and analyzing data.
+Python is a language with powerful tools built in, perfect for today's data scientist.
+If you are new to Python, like my self, do not worry we will be easing into all the concepts and code.
+Begin by importing these four libraries</p>
+
+</div>
+</div>
+</div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[84]:</div>
+<div class="prompt input_prompt">In&nbsp;[2]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">ipython</span> <span class="n">nbconvert</span> <span class="o">--</span><span class="n">to</span> <span class="n">html</span> <span class="n">notebook</span><span class="o">.</span><span class="n">ipynb</span>
-<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
-<span class="kn">from</span> <span class="nn">scipy.stats</span> <span class="k">import</span> <span class="n">f</span>
-<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
-<span class="kn">from</span> <span class="nn">sklearn</span> <span class="k">import</span> <span class="n">model_selection</span>
-<span class="kn">from</span> <span class="nn">sklearn</span> <span class="k">import</span> <span class="n">linear_model</span>
-<span class="kn">from</span> <span class="nn">sklearn</span> <span class="k">import</span> <span class="n">preprocessing</span>
-<span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="k">import</span> <span class="n">LabelEncoder</span>
-<span class="kn">import</span> <span class="nn">statsmodels.formula.api</span> <span class="k">as</span> <span class="nn">smf</span>
+<span class="kn">from</span> <span class="nn">scipy</span> <span class="k">import</span> <span class="n">stats</span>
 </pre></div>
 
 </div>
 </div>
 </div>
 
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-<div class="prompt"></div>
-
-
-<div class="output_subarea output_text output_error">
-<pre>
-<span class="ansi-cyan-fg">  File </span><span class="ansi-green-fg">&#34;&lt;ipython-input-84-205310eef8f4&gt;&#34;</span><span class="ansi-cyan-fg">, line </span><span class="ansi-green-fg">1</span>
-<span class="ansi-red-fg">    ipython nbconvert --to html notebook.ipynb</span>
-                    ^
-<span class="ansi-red-fg">SyntaxError</span><span class="ansi-red-fg">:</span> invalid syntax
-</pre>
 </div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Next we will be using panda to read in data tables for excel csv files.
+Feel free to download and use your own files, but this tutorial and its will be based one
+data from <a href="https://www.kaggle.com/chuckephron/leagueoflegends#_columns.csv">https://www.kaggle.com/chuckephron/leagueoflegends#_columns.csv</a>
+an example of one of the data frames made is below</p>
 
 </div>
 </div>
-
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[45]:</div>
+<div class="prompt input_prompt">In&nbsp;[3]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#gold and bans need tidying</span>
@@ -11830,8 +11827,6 @@ div#notebook {
 <span class="n">matchinfo</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;matchinfo.csv&quot;</span><span class="p">)</span>
 <span class="n">monsters</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;monsters.csv&quot;</span><span class="p">)</span>
 <span class="n">structures</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;structures.csv&quot;</span><span class="p">)</span>
-<span class="n">gold</span><span class="o">=</span><span class="n">pd</span><span class="o">.</span><span class="n">melt</span><span class="p">(</span><span class="n">gold</span><span class="p">,</span> <span class="n">id_vars</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Address&#39;</span><span class="p">,</span><span class="s1">&#39;Type&#39;</span><span class="p">],</span><span class="n">var_name</span><span class="o">=</span><span class="s1">&#39;minute&#39;</span><span class="p">,</span> <span class="n">value_name</span><span class="o">=</span><span class="s1">&#39;gold&#39;</span><span class="p">)</span>
-<span class="n">bans</span><span class="o">=</span><span class="n">pd</span><span class="o">.</span><span class="n">melt</span><span class="p">(</span><span class="n">bans</span><span class="p">,</span> <span class="n">id_vars</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Address&#39;</span><span class="p">,</span><span class="s1">&#39;Team&#39;</span><span class="p">],</span><span class="n">var_name</span><span class="o">=</span><span class="s1">&#39;ban&#39;</span><span class="p">,</span> <span class="n">value_name</span><span class="o">=</span><span class="s1">&#39;champion&#39;</span><span class="p">)</span>
 <span class="n">LoL</span>
 </pre></div>
 
@@ -11845,7 +11840,7 @@ div#notebook {
 
 <div class="output_area">
 
-<div class="prompt output_prompt">Out[45]:</div>
+<div class="prompt output_prompt">Out[3]:</div>
 
 
 
@@ -13368,9 +13363,2072 @@ div#notebook {
 </div>
 
 </div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Oh no! Look out below, this gold table has separated time into minute wise variables.
+This is considered untidy an may make it harder for you and others to analyze data
+across and within sets. The variables you want are time and gold diff</p>
+
+</div>
+</div>
+</div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[83]:</div>
+<div class="prompt input_prompt">In&nbsp;[4]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">gold</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+<div class="prompt output_prompt">Out[4]:</div>
+
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Address</th>
+      <th>Type</th>
+      <th>min_1</th>
+      <th>min_2</th>
+      <th>min_3</th>
+      <th>min_4</th>
+      <th>min_5</th>
+      <th>min_6</th>
+      <th>min_7</th>
+      <th>min_8</th>
+      <th>...</th>
+      <th>min_86</th>
+      <th>min_87</th>
+      <th>min_88</th>
+      <th>min_89</th>
+      <th>min_90</th>
+      <th>min_91</th>
+      <th>min_92</th>
+      <th>min_93</th>
+      <th>min_94</th>
+      <th>min_95</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>http://matchhistory.na.leagueoflegends.com/en/...</td>
+      <td>golddiff</td>
+      <td>0</td>
+      <td>0</td>
+      <td>-14</td>
+      <td>-65</td>
+      <td>-268</td>
+      <td>-431</td>
+      <td>-488</td>
+      <td>-789</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>http://matchhistory.na.leagueoflegends.com/en/...</td>
+      <td>golddiff</td>
+      <td>0</td>
+      <td>0</td>
+      <td>-26</td>
+      <td>-18</td>
+      <td>147</td>
+      <td>237</td>
+      <td>-152</td>
+      <td>18</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>http://matchhistory.na.leagueoflegends.com/en/...</td>
+      <td>golddiff</td>
+      <td>0</td>
+      <td>0</td>
+      <td>10</td>
+      <td>-60</td>
+      <td>34</td>
+      <td>37</td>
+      <td>589</td>
+      <td>1064</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>http://matchhistory.na.leagueoflegends.com/en/...</td>
+      <td>golddiff</td>
+      <td>0</td>
+      <td>0</td>
+      <td>-15</td>
+      <td>25</td>
+      <td>228</td>
+      <td>-6</td>
+      <td>-243</td>
+      <td>175</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>http://matchhistory.na.leagueoflegends.com/en/...</td>
+      <td>golddiff</td>
+      <td>40</td>
+      <td>40</td>
+      <td>44</td>
+      <td>-36</td>
+      <td>113</td>
+      <td>158</td>
+      <td>-121</td>
+      <td>-191</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>http://matchhistory.na.leagueoflegends.com/en/...</td>
+      <td>golddiff</td>
+      <td>0</td>
+      <td>0</td>
+      <td>20</td>
+      <td>-42</td>
+      <td>-48</td>
+      <td>-24</td>
+      <td>-219</td>
+      <td>-272</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>http://matchhistory.na.leagueoflegends.com/en/...</td>
+      <td>golddiff</td>
+      <td>0</td>
+      <td>13</td>
+      <td>-7</td>
+      <td>6</td>
+      <td>-353</td>
+      <td>-215</td>
+      <td>-795</td>
+      <td>-764</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>http://matchhistory.na.leagueoflegends.com/en/...</td>
+      <td>golddiff</td>
+      <td>0</td>
+      <td>0</td>
+      <td>26</td>
+      <td>91</td>
+      <td>-109</td>
+      <td>264</td>
+      <td>178</td>
+      <td>66</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>http://matchhistory.na.leagueoflegends.com/en/...</td>
+      <td>golddiff</td>
+      <td>0</td>
+      <td>-10</td>
+      <td>0</td>
+      <td>162</td>
+      <td>-269</td>
+      <td>-63</td>
+      <td>323</td>
+      <td>225</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>http://matchhistory.na.leagueoflegends.com/en/...</td>
+      <td>golddiff</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>68</td>
+      <td>498</td>
+      <td>210</td>
+      <td>283</td>
+      <td>311</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>http://matchhistory.na.leagueoflegends.com/en/...</td>
+      <td>golddiff</td>
+      <td>0</td>
+      <td>-10</td>
+      <td>-15</td>
+      <td>-274</td>
+      <td>-154</td>
+      <td>-49</td>
+      <td>134</td>
+      <td>122</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>http://matchhistory.na.leagueoflegends.com/en/...</td>
+      <td>golddiff</td>
+      <td>0</td>
+      <td>0</td>
+      <td>15</td>
+      <td>-91</td>
+      <td>-163</td>
+      <td>-45</td>
+      <td>-51</td>
+      <td>-192</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>http://matchhistory.na.leagueoflegends.com/en/...</td>
+      <td>golddiff</td>
+      <td>40</td>
+      <td>40</td>
+      <td>56</td>
+      <td>30</td>
+      <td>14</td>
+      <td>30</td>
+      <td>249</td>
+      <td>-126</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>http://matchhistory.na.leagueoflegends.com/en/...</td>
+      <td>golddiff</td>
+      <td>0</td>
+      <td>0</td>
+      <td>6</td>
+      <td>-532</td>
+      <td>-286</td>
+      <td>-533</td>
+      <td>-556</td>
+      <td>-1535</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>http://matchhistory.na.leagueoflegends.com/en/...</td>
+      <td>golddiff</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>708</td>
+      <td>460</td>
+      <td>753</td>
+      <td>874</td>
+      <td>907</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>http://matchhistory.na.leagueoflegends.com/en/...</td>
+      <td>golddiff</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>101</td>
+      <td>286</td>
+      <td>129</td>
+      <td>-59</td>
+      <td>1184</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>16</th>
+      <td>http://matchhistory.na.leagueoflegends.com/en/...</td>
+      <td>golddiff</td>
+      <td>0</td>
+      <td>10</td>
+      <td>-7</td>
+      <td>78</td>
+      <td>7</td>
+      <td>-146</td>
+      <td>206</td>
+      <td>75</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>http://matchhistory.na.leagueoflegends.com/en/...</td>
+      <td>golddiff</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>-230</td>
+      <td>-137</td>
+      <td>-142</td>
+      <td>-231</td>
+      <td>-196</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>18</th>
+      <td>http://matchhistory.na.leagueoflegends.com/en/...</td>
+      <td>golddiff</td>
+      <td>0</td>
+      <td>15</td>
+      <td>35</td>
+      <td>8</td>
+      <td>-117</td>
+      <td>33</td>
+      <td>758</td>
+      <td>725</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>19</th>
+      <td>http://matchhistory.na.leagueoflegends.com/en/...</td>
+      <td>golddiff</td>
+      <td>0</td>
+      <td>0</td>
+      <td>26</td>
+      <td>-26</td>
+      <td>-85</td>
+      <td>-63</td>
+      <td>-473</td>
+      <td>-1178</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>20</th>
+      <td>http://matchhistory.na.leagueoflegends.com/en/...</td>
+      <td>golddiff</td>
+      <td>0</td>
+      <td>8</td>
+      <td>8</td>
+      <td>87</td>
+      <td>82</td>
+      <td>-39</td>
+      <td>-39</td>
+      <td>197</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>21</th>
+      <td>http://matchhistory.na.leagueoflegends.com/en/...</td>
+      <td>golddiff</td>
+      <td>0</td>
+      <td>0</td>
+      <td>41</td>
+      <td>20</td>
+      <td>-101</td>
+      <td>21</td>
+      <td>226</td>
+      <td>410</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>22</th>
+      <td>http://matchhistory.na.leagueoflegends.com/en/...</td>
+      <td>golddiff</td>
+      <td>0</td>
+      <td>0</td>
+      <td>14</td>
+      <td>-373</td>
+      <td>-19</td>
+      <td>9</td>
+      <td>-38</td>
+      <td>18</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>23</th>
+      <td>http://matchhistory.na.leagueoflegends.com/en/...</td>
+      <td>golddiff</td>
+      <td>0</td>
+      <td>-5</td>
+      <td>-5</td>
+      <td>205</td>
+      <td>246</td>
+      <td>431</td>
+      <td>761</td>
+      <td>918</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>24</th>
+      <td>http://matchhistory.na.leagueoflegends.com/en/...</td>
+      <td>golddiff</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>-70</td>
+      <td>-182</td>
+      <td>-590</td>
+      <td>-153</td>
+      <td>-250</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>25</th>
+      <td>http://matchhistory.na.leagueoflegends.com/en/...</td>
+      <td>golddiff</td>
+      <td>0</td>
+      <td>0</td>
+      <td>-8</td>
+      <td>50</td>
+      <td>745</td>
+      <td>777</td>
+      <td>1029</td>
+      <td>1360</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>26</th>
+      <td>http://matchhistory.na.leagueoflegends.com/en/...</td>
+      <td>golddiff</td>
+      <td>0</td>
+      <td>0</td>
+      <td>28</td>
+      <td>32</td>
+      <td>114</td>
+      <td>139</td>
+      <td>390</td>
+      <td>507</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>27</th>
+      <td>http://matchhistory.na.leagueoflegends.com/en/...</td>
+      <td>golddiff</td>
+      <td>0</td>
+      <td>10</td>
+      <td>48</td>
+      <td>279</td>
+      <td>2</td>
+      <td>-236</td>
+      <td>-12</td>
+      <td>-121</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>28</th>
+      <td>http://matchhistory.na.leagueoflegends.com/en/...</td>
+      <td>golddiff</td>
+      <td>0</td>
+      <td>517</td>
+      <td>519</td>
+      <td>680</td>
+      <td>422</td>
+      <td>698</td>
+      <td>1342</td>
+      <td>1848</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>29</th>
+      <td>http://matchhistory.na.leagueoflegends.com/en/...</td>
+      <td>golddiff</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>-53</td>
+      <td>-18</td>
+      <td>133</td>
+      <td>-318</td>
+      <td>-280</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>99030</th>
+      <td>https://matchhistory.euw.leagueoflegends.com/e...</td>
+      <td>goldredSupport</td>
+      <td>500</td>
+      <td>500</td>
+      <td>566</td>
+      <td>762</td>
+      <td>995</td>
+      <td>1225</td>
+      <td>1461</td>
+      <td>1665</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>99031</th>
+      <td>https://matchhistory.euw.leagueoflegends.com/e...</td>
+      <td>goldredSupport</td>
+      <td>500</td>
+      <td>500</td>
+      <td>586</td>
+      <td>816</td>
+      <td>1030</td>
+      <td>1254</td>
+      <td>1415</td>
+      <td>1678</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>99032</th>
+      <td>https://matchhistory.euw.leagueoflegends.com/e...</td>
+      <td>goldredSupport</td>
+      <td>500</td>
+      <td>500</td>
+      <td>595</td>
+      <td>846</td>
+      <td>1108</td>
+      <td>1334</td>
+      <td>1544</td>
+      <td>1770</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>99033</th>
+      <td>https://matchhistory.na.leagueoflegends.com/en...</td>
+      <td>goldredSupport</td>
+      <td>500</td>
+      <td>500</td>
+      <td>566</td>
+      <td>785</td>
+      <td>1001</td>
+      <td>1183</td>
+      <td>1391</td>
+      <td>1576</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>99034</th>
+      <td>https://matchhistory.na.leagueoflegends.com/en...</td>
+      <td>goldredSupport</td>
+      <td>500</td>
+      <td>500</td>
+      <td>585</td>
+      <td>809</td>
+      <td>1048</td>
+      <td>1674</td>
+      <td>1868</td>
+      <td>2098</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>99035</th>
+      <td>https://matchhistory.na.leagueoflegends.com/en...</td>
+      <td>goldredSupport</td>
+      <td>500</td>
+      <td>500</td>
+      <td>604</td>
+      <td>771</td>
+      <td>995</td>
+      <td>1223</td>
+      <td>1431</td>
+      <td>1632</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>99036</th>
+      <td>https://matchhistory.na.leagueoflegends.com/en...</td>
+      <td>goldredSupport</td>
+      <td>500</td>
+      <td>500</td>
+      <td>523</td>
+      <td>813</td>
+      <td>995</td>
+      <td>1201</td>
+      <td>1386</td>
+      <td>1655</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>99037</th>
+      <td>https://matchhistory.na.leagueoflegends.com/en...</td>
+      <td>goldredSupport</td>
+      <td>500</td>
+      <td>500</td>
+      <td>566</td>
+      <td>775</td>
+      <td>967</td>
+      <td>1154</td>
+      <td>1341</td>
+      <td>1572</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>99038</th>
+      <td>https://matchhistory.na.leagueoflegends.com/en...</td>
+      <td>goldredSupport</td>
+      <td>500</td>
+      <td>500</td>
+      <td>563</td>
+      <td>822</td>
+      <td>1025</td>
+      <td>1215</td>
+      <td>1367</td>
+      <td>1596</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>99039</th>
+      <td>https://matchhistory.na.leagueoflegends.com/en...</td>
+      <td>goldredSupport</td>
+      <td>500</td>
+      <td>500</td>
+      <td>584</td>
+      <td>811</td>
+      <td>950</td>
+      <td>1215</td>
+      <td>1384</td>
+      <td>1639</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>99040</th>
+      <td>https://matchhistory.na.leagueoflegends.com/en...</td>
+      <td>goldredSupport</td>
+      <td>500</td>
+      <td>500</td>
+      <td>590</td>
+      <td>781</td>
+      <td>969</td>
+      <td>1183</td>
+      <td>1397</td>
+      <td>1647</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>99041</th>
+      <td>https://matchhistory.na.leagueoflegends.com/en...</td>
+      <td>goldredSupport</td>
+      <td>500</td>
+      <td>500</td>
+      <td>587</td>
+      <td>794</td>
+      <td>1061</td>
+      <td>1271</td>
+      <td>1453</td>
+      <td>1699</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>99042</th>
+      <td>https://matchhistory.na.leagueoflegends.com/en...</td>
+      <td>goldredSupport</td>
+      <td>500</td>
+      <td>500</td>
+      <td>585</td>
+      <td>816</td>
+      <td>1030</td>
+      <td>1263</td>
+      <td>1451</td>
+      <td>1729</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>99043</th>
+      <td>https://matchhistory.na.leagueoflegends.com/en...</td>
+      <td>goldredSupport</td>
+      <td>500</td>
+      <td>500</td>
+      <td>527</td>
+      <td>752</td>
+      <td>915</td>
+      <td>1101</td>
+      <td>1297</td>
+      <td>1489</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>99044</th>
+      <td>https://matchhistory.na.leagueoflegends.com/en...</td>
+      <td>goldredSupport</td>
+      <td>500</td>
+      <td>500</td>
+      <td>567</td>
+      <td>767</td>
+      <td>1160</td>
+      <td>1310</td>
+      <td>1614</td>
+      <td>1761</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>99045</th>
+      <td>https://matchhistory.na.leagueoflegends.com/en...</td>
+      <td>goldredSupport</td>
+      <td>500</td>
+      <td>500</td>
+      <td>584</td>
+      <td>815</td>
+      <td>1018</td>
+      <td>1230</td>
+      <td>1566</td>
+      <td>1756</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>99046</th>
+      <td>https://matchhistory.na.leagueoflegends.com/en...</td>
+      <td>goldredSupport</td>
+      <td>500</td>
+      <td>500</td>
+      <td>603</td>
+      <td>786</td>
+      <td>997</td>
+      <td>1225</td>
+      <td>1444</td>
+      <td>1658</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>99047</th>
+      <td>https://matchhistory.na.leagueoflegends.com/en...</td>
+      <td>goldredSupport</td>
+      <td>500</td>
+      <td>500</td>
+      <td>549</td>
+      <td>735</td>
+      <td>943</td>
+      <td>1111</td>
+      <td>1331</td>
+      <td>1521</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>99048</th>
+      <td>https://matchhistory.na.leagueoflegends.com/en...</td>
+      <td>goldredSupport</td>
+      <td>500</td>
+      <td>500</td>
+      <td>545</td>
+      <td>746</td>
+      <td>1005</td>
+      <td>1229</td>
+      <td>1364</td>
+      <td>1619</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>99049</th>
+      <td>https://matchhistory.br.leagueoflegends.com/pt...</td>
+      <td>goldredSupport</td>
+      <td>500</td>
+      <td>510</td>
+      <td>621</td>
+      <td>830</td>
+      <td>1063</td>
+      <td>1270</td>
+      <td>1525</td>
+      <td>1721</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>99050</th>
+      <td>https://matchhistory.br.leagueoflegends.com/pt...</td>
+      <td>goldredSupport</td>
+      <td>500</td>
+      <td>500</td>
+      <td>585</td>
+      <td>831</td>
+      <td>1052</td>
+      <td>1290</td>
+      <td>1542</td>
+      <td>1706</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>99051</th>
+      <td>https://matchhistory.br.leagueoflegends.com/pt...</td>
+      <td>goldredSupport</td>
+      <td>500</td>
+      <td>500</td>
+      <td>565</td>
+      <td>810</td>
+      <td>1005</td>
+      <td>1267</td>
+      <td>1450</td>
+      <td>1720</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>99052</th>
+      <td>https://matchhistory.br.leagueoflegends.com/pt...</td>
+      <td>goldredSupport</td>
+      <td>500</td>
+      <td>500</td>
+      <td>585</td>
+      <td>764</td>
+      <td>1014</td>
+      <td>1215</td>
+      <td>1464</td>
+      <td>1649</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>99053</th>
+      <td>https://matchhistory.br.leagueoflegends.com/pt...</td>
+      <td>goldredSupport</td>
+      <td>500</td>
+      <td>500</td>
+      <td>566</td>
+      <td>769</td>
+      <td>1019</td>
+      <td>1257</td>
+      <td>1434</td>
+      <td>1687</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>99054</th>
+      <td>https://matchhistory.euw.leagueoflegends.com/e...</td>
+      <td>goldredSupport</td>
+      <td>500</td>
+      <td>500</td>
+      <td>585</td>
+      <td>772</td>
+      <td>991</td>
+      <td>1195</td>
+      <td>1383</td>
+      <td>1570</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>99055</th>
+      <td>https://matchhistory.euw.leagueoflegends.com/e...</td>
+      <td>goldredSupport</td>
+      <td>500</td>
+      <td>500</td>
+      <td>566</td>
+      <td>801</td>
+      <td>1004</td>
+      <td>1234</td>
+      <td>1463</td>
+      <td>1674</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>99056</th>
+      <td>https://matchhistory.euw.leagueoflegends.com/e...</td>
+      <td>goldredSupport</td>
+      <td>500</td>
+      <td>500</td>
+      <td>587</td>
+      <td>790</td>
+      <td>1107</td>
+      <td>1335</td>
+      <td>1472</td>
+      <td>1616</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>99057</th>
+      <td>https://matchhistory.na.leagueoflegends.com/en...</td>
+      <td>goldredSupport</td>
+      <td>500</td>
+      <td>500</td>
+      <td>585</td>
+      <td>770</td>
+      <td>976</td>
+      <td>1222</td>
+      <td>1446</td>
+      <td>1627</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>99058</th>
+      <td>https://matchhistory.na.leagueoflegends.com/en...</td>
+      <td>goldredSupport</td>
+      <td>500</td>
+      <td>500</td>
+      <td>592</td>
+      <td>788</td>
+      <td>1006</td>
+      <td>1251</td>
+      <td>1490</td>
+      <td>1704</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>99059</th>
+      <td>https://matchhistory.na.leagueoflegends.com/en...</td>
+      <td>goldredSupport</td>
+      <td>500</td>
+      <td>500</td>
+      <td>585</td>
+      <td>793</td>
+      <td>998</td>
+      <td>1201</td>
+      <td>1373</td>
+      <td>1619</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+  </tbody>
+</table>
+<p>99060 rows × 97 columns</p>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>In order to tidy this data up, use pd.melt to consolidate the columns that represent variables rather than data values</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[5]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">gold</span><span class="o">=</span><span class="n">pd</span><span class="o">.</span><span class="n">melt</span><span class="p">(</span><span class="n">gold</span><span class="p">,</span> <span class="n">id_vars</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Address&#39;</span><span class="p">,</span><span class="s1">&#39;Type&#39;</span><span class="p">],</span><span class="n">var_name</span><span class="o">=</span><span class="s1">&#39;minute&#39;</span><span class="p">,</span> <span class="n">value_name</span><span class="o">=</span><span class="s1">&#39;gold&#39;</span><span class="p">)</span>
+<span class="n">bans</span><span class="o">=</span><span class="n">pd</span><span class="o">.</span><span class="n">melt</span><span class="p">(</span><span class="n">bans</span><span class="p">,</span> <span class="n">id_vars</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Address&#39;</span><span class="p">,</span><span class="s1">&#39;Team&#39;</span><span class="p">],</span><span class="n">var_name</span><span class="o">=</span><span class="s1">&#39;ban&#39;</span><span class="p">,</span> <span class="n">value_name</span><span class="o">=</span><span class="s1">&#39;champion&#39;</span><span class="p">)</span>
+<span class="n">gold</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+<div class="prompt output_prompt">Out[5]:</div>
+
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Address</th>
+      <th>Type</th>
+      <th>minute</th>
+      <th>gold</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>http://matchhistory.na.leagueoflegends.com/en/...</td>
+      <td>golddiff</td>
+      <td>min_1</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>http://matchhistory.na.leagueoflegends.com/en/...</td>
+      <td>golddiff</td>
+      <td>min_1</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>http://matchhistory.na.leagueoflegends.com/en/...</td>
+      <td>golddiff</td>
+      <td>min_1</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>http://matchhistory.na.leagueoflegends.com/en/...</td>
+      <td>golddiff</td>
+      <td>min_1</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>http://matchhistory.na.leagueoflegends.com/en/...</td>
+      <td>golddiff</td>
+      <td>min_1</td>
+      <td>40.0</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>http://matchhistory.na.leagueoflegends.com/en/...</td>
+      <td>golddiff</td>
+      <td>min_1</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>http://matchhistory.na.leagueoflegends.com/en/...</td>
+      <td>golddiff</td>
+      <td>min_1</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>http://matchhistory.na.leagueoflegends.com/en/...</td>
+      <td>golddiff</td>
+      <td>min_1</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>http://matchhistory.na.leagueoflegends.com/en/...</td>
+      <td>golddiff</td>
+      <td>min_1</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>http://matchhistory.na.leagueoflegends.com/en/...</td>
+      <td>golddiff</td>
+      <td>min_1</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>http://matchhistory.na.leagueoflegends.com/en/...</td>
+      <td>golddiff</td>
+      <td>min_1</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>http://matchhistory.na.leagueoflegends.com/en/...</td>
+      <td>golddiff</td>
+      <td>min_1</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>http://matchhistory.na.leagueoflegends.com/en/...</td>
+      <td>golddiff</td>
+      <td>min_1</td>
+      <td>40.0</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>http://matchhistory.na.leagueoflegends.com/en/...</td>
+      <td>golddiff</td>
+      <td>min_1</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>http://matchhistory.na.leagueoflegends.com/en/...</td>
+      <td>golddiff</td>
+      <td>min_1</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>http://matchhistory.na.leagueoflegends.com/en/...</td>
+      <td>golddiff</td>
+      <td>min_1</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>16</th>
+      <td>http://matchhistory.na.leagueoflegends.com/en/...</td>
+      <td>golddiff</td>
+      <td>min_1</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>http://matchhistory.na.leagueoflegends.com/en/...</td>
+      <td>golddiff</td>
+      <td>min_1</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>18</th>
+      <td>http://matchhistory.na.leagueoflegends.com/en/...</td>
+      <td>golddiff</td>
+      <td>min_1</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>19</th>
+      <td>http://matchhistory.na.leagueoflegends.com/en/...</td>
+      <td>golddiff</td>
+      <td>min_1</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>20</th>
+      <td>http://matchhistory.na.leagueoflegends.com/en/...</td>
+      <td>golddiff</td>
+      <td>min_1</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>21</th>
+      <td>http://matchhistory.na.leagueoflegends.com/en/...</td>
+      <td>golddiff</td>
+      <td>min_1</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>22</th>
+      <td>http://matchhistory.na.leagueoflegends.com/en/...</td>
+      <td>golddiff</td>
+      <td>min_1</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>23</th>
+      <td>http://matchhistory.na.leagueoflegends.com/en/...</td>
+      <td>golddiff</td>
+      <td>min_1</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>24</th>
+      <td>http://matchhistory.na.leagueoflegends.com/en/...</td>
+      <td>golddiff</td>
+      <td>min_1</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>25</th>
+      <td>http://matchhistory.na.leagueoflegends.com/en/...</td>
+      <td>golddiff</td>
+      <td>min_1</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>26</th>
+      <td>http://matchhistory.na.leagueoflegends.com/en/...</td>
+      <td>golddiff</td>
+      <td>min_1</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>27</th>
+      <td>http://matchhistory.na.leagueoflegends.com/en/...</td>
+      <td>golddiff</td>
+      <td>min_1</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>28</th>
+      <td>http://matchhistory.na.leagueoflegends.com/en/...</td>
+      <td>golddiff</td>
+      <td>min_1</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>29</th>
+      <td>http://matchhistory.na.leagueoflegends.com/en/...</td>
+      <td>golddiff</td>
+      <td>min_1</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>9410670</th>
+      <td>https://matchhistory.euw.leagueoflegends.com/e...</td>
+      <td>goldredSupport</td>
+      <td>min_95</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>9410671</th>
+      <td>https://matchhistory.euw.leagueoflegends.com/e...</td>
+      <td>goldredSupport</td>
+      <td>min_95</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>9410672</th>
+      <td>https://matchhistory.euw.leagueoflegends.com/e...</td>
+      <td>goldredSupport</td>
+      <td>min_95</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>9410673</th>
+      <td>https://matchhistory.na.leagueoflegends.com/en...</td>
+      <td>goldredSupport</td>
+      <td>min_95</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>9410674</th>
+      <td>https://matchhistory.na.leagueoflegends.com/en...</td>
+      <td>goldredSupport</td>
+      <td>min_95</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>9410675</th>
+      <td>https://matchhistory.na.leagueoflegends.com/en...</td>
+      <td>goldredSupport</td>
+      <td>min_95</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>9410676</th>
+      <td>https://matchhistory.na.leagueoflegends.com/en...</td>
+      <td>goldredSupport</td>
+      <td>min_95</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>9410677</th>
+      <td>https://matchhistory.na.leagueoflegends.com/en...</td>
+      <td>goldredSupport</td>
+      <td>min_95</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>9410678</th>
+      <td>https://matchhistory.na.leagueoflegends.com/en...</td>
+      <td>goldredSupport</td>
+      <td>min_95</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>9410679</th>
+      <td>https://matchhistory.na.leagueoflegends.com/en...</td>
+      <td>goldredSupport</td>
+      <td>min_95</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>9410680</th>
+      <td>https://matchhistory.na.leagueoflegends.com/en...</td>
+      <td>goldredSupport</td>
+      <td>min_95</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>9410681</th>
+      <td>https://matchhistory.na.leagueoflegends.com/en...</td>
+      <td>goldredSupport</td>
+      <td>min_95</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>9410682</th>
+      <td>https://matchhistory.na.leagueoflegends.com/en...</td>
+      <td>goldredSupport</td>
+      <td>min_95</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>9410683</th>
+      <td>https://matchhistory.na.leagueoflegends.com/en...</td>
+      <td>goldredSupport</td>
+      <td>min_95</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>9410684</th>
+      <td>https://matchhistory.na.leagueoflegends.com/en...</td>
+      <td>goldredSupport</td>
+      <td>min_95</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>9410685</th>
+      <td>https://matchhistory.na.leagueoflegends.com/en...</td>
+      <td>goldredSupport</td>
+      <td>min_95</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>9410686</th>
+      <td>https://matchhistory.na.leagueoflegends.com/en...</td>
+      <td>goldredSupport</td>
+      <td>min_95</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>9410687</th>
+      <td>https://matchhistory.na.leagueoflegends.com/en...</td>
+      <td>goldredSupport</td>
+      <td>min_95</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>9410688</th>
+      <td>https://matchhistory.na.leagueoflegends.com/en...</td>
+      <td>goldredSupport</td>
+      <td>min_95</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>9410689</th>
+      <td>https://matchhistory.br.leagueoflegends.com/pt...</td>
+      <td>goldredSupport</td>
+      <td>min_95</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>9410690</th>
+      <td>https://matchhistory.br.leagueoflegends.com/pt...</td>
+      <td>goldredSupport</td>
+      <td>min_95</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>9410691</th>
+      <td>https://matchhistory.br.leagueoflegends.com/pt...</td>
+      <td>goldredSupport</td>
+      <td>min_95</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>9410692</th>
+      <td>https://matchhistory.br.leagueoflegends.com/pt...</td>
+      <td>goldredSupport</td>
+      <td>min_95</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>9410693</th>
+      <td>https://matchhistory.br.leagueoflegends.com/pt...</td>
+      <td>goldredSupport</td>
+      <td>min_95</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>9410694</th>
+      <td>https://matchhistory.euw.leagueoflegends.com/e...</td>
+      <td>goldredSupport</td>
+      <td>min_95</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>9410695</th>
+      <td>https://matchhistory.euw.leagueoflegends.com/e...</td>
+      <td>goldredSupport</td>
+      <td>min_95</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>9410696</th>
+      <td>https://matchhistory.euw.leagueoflegends.com/e...</td>
+      <td>goldredSupport</td>
+      <td>min_95</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>9410697</th>
+      <td>https://matchhistory.na.leagueoflegends.com/en...</td>
+      <td>goldredSupport</td>
+      <td>min_95</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>9410698</th>
+      <td>https://matchhistory.na.leagueoflegends.com/en...</td>
+      <td>goldredSupport</td>
+      <td>min_95</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>9410699</th>
+      <td>https://matchhistory.na.leagueoflegends.com/en...</td>
+      <td>goldredSupport</td>
+      <td>min_95</td>
+      <td>NaN</td>
+    </tr>
+  </tbody>
+</table>
+<p>9410700 rows × 4 columns</p>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>now it's time for some data visualization. I am interested in win percentage predicted
+by final gold differential. Note there are much faster ways of achieving this goal,
+however to get a feel for how dataframes can be tranversed and added to, and grouped this code 
+shows what may be the longest route. Note when using operations, it never hurts to check the 
+actual csv file to see if the cell is filled with a string or int.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[6]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">x</span><span class="o">=</span><span class="nb">list</span><span class="p">()</span>
@@ -13418,7 +15476,7 @@ div#notebook {
 
 <div class="output_area">
 
-<div class="prompt output_prompt">Out[83]:</div>
+<div class="prompt output_prompt">Out[6]:</div>
 
 
 
@@ -13945,6 +16003,1307 @@ div#notebook {
 
 </div>
 
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>One helpful feature python offers is dictionaries which will give you the ability to
+covert values within and between dataframes so that they can be cross analyzed.
+Can you see why I performed the next step?</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[23]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">diction</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">LoL</span><span class="o">.</span><span class="n">Address</span><span class="p">,</span><span class="n">LoL</span><span class="o">.</span><span class="n">blueTeamTag</span><span class="p">))</span>
+<span class="n">structures</span><span class="p">[</span><span class="s1">&#39;Team&#39;</span><span class="p">]</span><span class="o">=</span><span class="n">structures</span><span class="p">[</span><span class="s1">&#39;Address&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">diction</span><span class="p">)</span> 
+<span class="n">matchinfo</span><span class="p">[</span><span class="s1">&#39;Team&#39;</span><span class="p">]</span><span class="o">=</span><span class="n">matchinfo</span><span class="p">[</span><span class="s1">&#39;Address&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">diction</span><span class="p">)</span> 
+<span class="n">bans</span><span class="p">[</span><span class="s1">&#39;Team&#39;</span><span class="p">]</span><span class="o">=</span><span class="n">bans</span><span class="p">[</span><span class="s1">&#39;Address&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">diction</span><span class="p">)</span>
+<span class="n">kills</span><span class="p">[</span><span class="s1">&#39;Team&#39;</span><span class="p">]</span><span class="o">=</span><span class="n">kills</span><span class="p">[</span><span class="s1">&#39;Address&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">diction</span><span class="p">)</span>
+<span class="n">diction</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Correct, so that all the dataframes will have the option of intuitively grouping by team.
+In our first visualization we saw a positive trend between winning an having more gold than your opponent.
+Now we want to see if the two main ways of making gold will have the same trend</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[24]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">structures</span><span class="p">[</span><span class="s1">&#39;count&#39;</span><span class="p">]</span><span class="o">=</span><span class="mi">1</span>
+<span class="n">structures_teams</span><span class="o">=</span><span class="n">structures</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s1">&#39;Team&#39;</span><span class="p">],</span> <span class="n">as_index</span><span class="o">=</span><span class="kc">False</span><span class="p">)[</span><span class="s1">&#39;count&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+<span class="n">LoL_teams</span> <span class="o">=</span> <span class="n">LoL</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s1">&#39;blueTeamTag&#39;</span><span class="p">],</span> <span class="n">as_index</span><span class="o">=</span><span class="kc">False</span><span class="p">)[</span><span class="s1">&#39;bResult&#39;</span><span class="p">,</span> <span class="s1">&#39;rResult&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+<span class="n">LoL_teams</span><span class="p">[</span><span class="s1">&#39;structures&#39;</span><span class="p">]</span><span class="o">=</span><span class="n">pd</span><span class="o">.</span><span class="n">to_numeric</span><span class="p">(</span><span class="n">structures_teams</span><span class="p">[</span><span class="s1">&#39;count&#39;</span><span class="p">])</span> <span class="o">/</span> <span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">to_numeric</span><span class="p">(</span><span class="n">LoL_teams</span><span class="p">[</span><span class="s1">&#39;bResult&#39;</span><span class="p">])</span> <span class="o">+</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_numeric</span><span class="p">(</span><span class="n">LoL_teams</span><span class="p">[</span><span class="s1">&#39;rResult&#39;</span><span class="p">]))</span>
+<span class="n">LoL_teams</span><span class="p">[</span><span class="s1">&#39;win_percent&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_numeric</span><span class="p">(</span><span class="n">LoL_teams</span><span class="p">[</span><span class="s1">&#39;bResult&#39;</span><span class="p">])</span> <span class="o">/</span> <span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">to_numeric</span><span class="p">(</span><span class="n">LoL_teams</span><span class="p">[</span><span class="s1">&#39;bResult&#39;</span><span class="p">])</span> <span class="o">+</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_numeric</span><span class="p">(</span><span class="n">LoL_teams</span><span class="p">[</span><span class="s1">&#39;rResult&#39;</span><span class="p">]))</span>
+<span class="n">LoL_teams</span><span class="o">=</span><span class="n">LoL_teams</span><span class="p">[</span><span class="n">LoL_teams</span><span class="o">.</span><span class="n">win_percent</span> <span class="o">!=</span> <span class="mi">1</span><span class="p">]</span>
+<span class="n">LoL_teams</span><span class="o">=</span><span class="n">LoL_teams</span><span class="p">[</span><span class="n">LoL_teams</span><span class="o">.</span><span class="n">win_percent</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">]</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Structures per game vs Win_percentage&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Structures&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Win_percentage&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">LoL_teams</span><span class="o">.</span><span class="n">structures</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">LoL_teams</span><span class="o">.</span><span class="n">win_percent</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<span class="n">LoL_teams</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+<div class="prompt"></div>
+
+
+
+
+<div class="output_png output_subarea ">
+<img src="data:image/png;base64,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
+"
+>
+</div>
+
+</div>
+
+<div class="output_area">
+
+<div class="prompt output_prompt">Out[24]:</div>
+
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>blueTeamTag</th>
+      <th>bResult</th>
+      <th>rResult</th>
+      <th>structures</th>
+      <th>win_percent</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>1</th>
+      <td>17A</td>
+      <td>1</td>
+      <td>3</td>
+      <td>15.750000</td>
+      <td>0.250000</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>7h</td>
+      <td>18</td>
+      <td>17</td>
+      <td>15.428571</td>
+      <td>0.514286</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>A</td>
+      <td>6</td>
+      <td>11</td>
+      <td>15.941176</td>
+      <td>0.352941</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>AE</td>
+      <td>15</td>
+      <td>23</td>
+      <td>16.078947</td>
+      <td>0.394737</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>AF</td>
+      <td>3</td>
+      <td>1</td>
+      <td>13.250000</td>
+      <td>0.750000</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>AFR</td>
+      <td>1</td>
+      <td>1</td>
+      <td>16.000000</td>
+      <td>0.500000</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>AFs</td>
+      <td>65</td>
+      <td>46</td>
+      <td>15.981982</td>
+      <td>0.585586</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>AHQ</td>
+      <td>16</td>
+      <td>15</td>
+      <td>14.935484</td>
+      <td>0.516129</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>ANC</td>
+      <td>12</td>
+      <td>14</td>
+      <td>14.384615</td>
+      <td>0.461538</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>ANX</td>
+      <td>15</td>
+      <td>4</td>
+      <td>15.368421</td>
+      <td>0.789474</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>APX</td>
+      <td>14</td>
+      <td>14</td>
+      <td>16.642857</td>
+      <td>0.500000</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>AS</td>
+      <td>4</td>
+      <td>9</td>
+      <td>16.000000</td>
+      <td>0.307692</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>AUR</td>
+      <td>42</td>
+      <td>25</td>
+      <td>16.164179</td>
+      <td>0.626866</td>
+    </tr>
+    <tr>
+      <th>16</th>
+      <td>AV</td>
+      <td>30</td>
+      <td>29</td>
+      <td>15.322034</td>
+      <td>0.508475</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>B2K</td>
+      <td>3</td>
+      <td>9</td>
+      <td>16.333333</td>
+      <td>0.250000</td>
+    </tr>
+    <tr>
+      <th>18</th>
+      <td>BC</td>
+      <td>1</td>
+      <td>8</td>
+      <td>17.666667</td>
+      <td>0.111111</td>
+    </tr>
+    <tr>
+      <th>19</th>
+      <td>BE</td>
+      <td>1</td>
+      <td>9</td>
+      <td>13.900000</td>
+      <td>0.100000</td>
+    </tr>
+    <tr>
+      <th>20</th>
+      <td>BGG</td>
+      <td>1</td>
+      <td>6</td>
+      <td>18.857143</td>
+      <td>0.142857</td>
+    </tr>
+    <tr>
+      <th>21</th>
+      <td>BJK</td>
+      <td>33</td>
+      <td>21</td>
+      <td>15.740741</td>
+      <td>0.611111</td>
+    </tr>
+    <tr>
+      <th>24</th>
+      <td>BPI</td>
+      <td>2</td>
+      <td>5</td>
+      <td>16.428571</td>
+      <td>0.285714</td>
+    </tr>
+    <tr>
+      <th>25</th>
+      <td>C9</td>
+      <td>90</td>
+      <td>63</td>
+      <td>16.091503</td>
+      <td>0.588235</td>
+    </tr>
+    <tr>
+      <th>27</th>
+      <td>CA</td>
+      <td>4</td>
+      <td>3</td>
+      <td>14.428571</td>
+      <td>0.571429</td>
+    </tr>
+    <tr>
+      <th>29</th>
+      <td>CG</td>
+      <td>2</td>
+      <td>1</td>
+      <td>14.666667</td>
+      <td>0.666667</td>
+    </tr>
+    <tr>
+      <th>30</th>
+      <td>CGE</td>
+      <td>1</td>
+      <td>15</td>
+      <td>15.312500</td>
+      <td>0.062500</td>
+    </tr>
+    <tr>
+      <th>31</th>
+      <td>CHF</td>
+      <td>46</td>
+      <td>21</td>
+      <td>15.268657</td>
+      <td>0.686567</td>
+    </tr>
+    <tr>
+      <th>32</th>
+      <td>CJ</td>
+      <td>14</td>
+      <td>9</td>
+      <td>16.391304</td>
+      <td>0.608696</td>
+    </tr>
+    <tr>
+      <th>33</th>
+      <td>CJE</td>
+      <td>39</td>
+      <td>41</td>
+      <td>16.287500</td>
+      <td>0.487500</td>
+    </tr>
+    <tr>
+      <th>35</th>
+      <td>CLG</td>
+      <td>92</td>
+      <td>62</td>
+      <td>16.142857</td>
+      <td>0.597403</td>
+    </tr>
+    <tr>
+      <th>36</th>
+      <td>CLK</td>
+      <td>10</td>
+      <td>25</td>
+      <td>16.200000</td>
+      <td>0.285714</td>
+    </tr>
+    <tr>
+      <th>37</th>
+      <td>CNB</td>
+      <td>13</td>
+      <td>21</td>
+      <td>17.382353</td>
+      <td>0.382353</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>204</th>
+      <td>TL</td>
+      <td>76</td>
+      <td>57</td>
+      <td>15.759398</td>
+      <td>0.571429</td>
+    </tr>
+    <tr>
+      <th>206</th>
+      <td>TM</td>
+      <td>14</td>
+      <td>40</td>
+      <td>16.574074</td>
+      <td>0.259259</td>
+    </tr>
+    <tr>
+      <th>207</th>
+      <td>TPA</td>
+      <td>24</td>
+      <td>18</td>
+      <td>15.666667</td>
+      <td>0.571429</td>
+    </tr>
+    <tr>
+      <th>208</th>
+      <td>TRC</td>
+      <td>1</td>
+      <td>1</td>
+      <td>21.500000</td>
+      <td>0.500000</td>
+    </tr>
+    <tr>
+      <th>209</th>
+      <td>TRI</td>
+      <td>6</td>
+      <td>6</td>
+      <td>15.333333</td>
+      <td>0.500000</td>
+    </tr>
+    <tr>
+      <th>211</th>
+      <td>TSM</td>
+      <td>104</td>
+      <td>42</td>
+      <td>15.863014</td>
+      <td>0.712329</td>
+    </tr>
+    <tr>
+      <th>213</th>
+      <td>TT</td>
+      <td>25</td>
+      <td>20</td>
+      <td>16.066667</td>
+      <td>0.555556</td>
+    </tr>
+    <tr>
+      <th>215</th>
+      <td>TY</td>
+      <td>1</td>
+      <td>4</td>
+      <td>16.400000</td>
+      <td>0.200000</td>
+    </tr>
+    <tr>
+      <th>216</th>
+      <td>UOL</td>
+      <td>65</td>
+      <td>57</td>
+      <td>16.426230</td>
+      <td>0.532787</td>
+    </tr>
+    <tr>
+      <th>217</th>
+      <td>USG</td>
+      <td>23</td>
+      <td>15</td>
+      <td>14.710526</td>
+      <td>0.605263</td>
+    </tr>
+    <tr>
+      <th>218</th>
+      <td>VEG</td>
+      <td>22</td>
+      <td>16</td>
+      <td>15.631579</td>
+      <td>0.578947</td>
+    </tr>
+    <tr>
+      <th>219</th>
+      <td>VFK</td>
+      <td>15</td>
+      <td>5</td>
+      <td>16.450000</td>
+      <td>0.750000</td>
+    </tr>
+    <tr>
+      <th>220</th>
+      <td>VIT</td>
+      <td>29</td>
+      <td>28</td>
+      <td>15.508772</td>
+      <td>0.508772</td>
+    </tr>
+    <tr>
+      <th>221</th>
+      <td>VK</td>
+      <td>1</td>
+      <td>1</td>
+      <td>17.000000</td>
+      <td>0.500000</td>
+    </tr>
+    <tr>
+      <th>222</th>
+      <td>VP</td>
+      <td>13</td>
+      <td>11</td>
+      <td>16.000000</td>
+      <td>0.541667</td>
+    </tr>
+    <tr>
+      <th>223</th>
+      <td>VS</td>
+      <td>16</td>
+      <td>18</td>
+      <td>15.705882</td>
+      <td>0.470588</td>
+    </tr>
+    <tr>
+      <th>224</th>
+      <td>WE</td>
+      <td>16</td>
+      <td>8</td>
+      <td>14.958333</td>
+      <td>0.666667</td>
+    </tr>
+    <tr>
+      <th>225</th>
+      <td>WFX</td>
+      <td>6</td>
+      <td>5</td>
+      <td>15.636364</td>
+      <td>0.545455</td>
+    </tr>
+    <tr>
+      <th>227</th>
+      <td>WS</td>
+      <td>10</td>
+      <td>16</td>
+      <td>16.038462</td>
+      <td>0.384615</td>
+    </tr>
+    <tr>
+      <th>228</th>
+      <td>Winners</td>
+      <td>1</td>
+      <td>1</td>
+      <td>13.000000</td>
+      <td>0.500000</td>
+    </tr>
+    <tr>
+      <th>229</th>
+      <td>X5</td>
+      <td>1</td>
+      <td>10</td>
+      <td>15.181818</td>
+      <td>0.090909</td>
+    </tr>
+    <tr>
+      <th>230</th>
+      <td>XG</td>
+      <td>14</td>
+      <td>33</td>
+      <td>15.319149</td>
+      <td>0.297872</td>
+    </tr>
+    <tr>
+      <th>232</th>
+      <td>YC</td>
+      <td>1</td>
+      <td>3</td>
+      <td>14.750000</td>
+      <td>0.250000</td>
+    </tr>
+    <tr>
+      <th>234</th>
+      <td>ZONE</td>
+      <td>2</td>
+      <td>5</td>
+      <td>16.000000</td>
+      <td>0.285714</td>
+    </tr>
+    <tr>
+      <th>235</th>
+      <td>ZTG</td>
+      <td>12</td>
+      <td>17</td>
+      <td>16.827586</td>
+      <td>0.413793</td>
+    </tr>
+    <tr>
+      <th>236</th>
+      <td>ahq</td>
+      <td>76</td>
+      <td>20</td>
+      <td>14.770833</td>
+      <td>0.791667</td>
+    </tr>
+    <tr>
+      <th>238</th>
+      <td>bbq</td>
+      <td>26</td>
+      <td>24</td>
+      <td>16.300000</td>
+      <td>0.520000</td>
+    </tr>
+    <tr>
+      <th>239</th>
+      <td>g3x</td>
+      <td>1</td>
+      <td>6</td>
+      <td>16.714286</td>
+      <td>0.142857</td>
+    </tr>
+    <tr>
+      <th>240</th>
+      <td>kt</td>
+      <td>101</td>
+      <td>62</td>
+      <td>15.938650</td>
+      <td>0.619632</td>
+    </tr>
+    <tr>
+      <th>241</th>
+      <td>yoeFW</td>
+      <td>6</td>
+      <td>2</td>
+      <td>15.250000</td>
+      <td>0.750000</td>
+    </tr>
+  </tbody>
+</table>
+<p>205 rows × 5 columns</p>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[25]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">kills</span><span class="p">[</span><span class="s1">&#39;count&#39;</span><span class="p">]</span><span class="o">=</span><span class="mi">1</span>
+<span class="n">kills_teams</span><span class="o">=</span><span class="n">kills</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s1">&#39;Team&#39;</span><span class="p">],</span> <span class="n">as_index</span><span class="o">=</span><span class="kc">False</span><span class="p">)[</span><span class="s1">&#39;count&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+<span class="n">LoL_teams</span> <span class="o">=</span> <span class="n">LoL</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s1">&#39;blueTeamTag&#39;</span><span class="p">],</span> <span class="n">as_index</span><span class="o">=</span><span class="kc">False</span><span class="p">)[</span><span class="s1">&#39;bResult&#39;</span><span class="p">,</span> <span class="s1">&#39;rResult&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+<span class="n">LoL_teams</span><span class="p">[</span><span class="s1">&#39;kills&#39;</span><span class="p">]</span><span class="o">=</span><span class="n">pd</span><span class="o">.</span><span class="n">to_numeric</span><span class="p">(</span><span class="n">kills_teams</span><span class="p">[</span><span class="s1">&#39;count&#39;</span><span class="p">])</span> <span class="o">/</span> <span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">to_numeric</span><span class="p">(</span><span class="n">LoL_teams</span><span class="p">[</span><span class="s1">&#39;bResult&#39;</span><span class="p">])</span> <span class="o">+</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_numeric</span><span class="p">(</span><span class="n">LoL_teams</span><span class="p">[</span><span class="s1">&#39;rResult&#39;</span><span class="p">]))</span>
+<span class="n">LoL_teams</span><span class="p">[</span><span class="s1">&#39;win_percent&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_numeric</span><span class="p">(</span><span class="n">LoL_teams</span><span class="p">[</span><span class="s1">&#39;bResult&#39;</span><span class="p">])</span> <span class="o">/</span> <span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">to_numeric</span><span class="p">(</span><span class="n">LoL_teams</span><span class="p">[</span><span class="s1">&#39;bResult&#39;</span><span class="p">])</span> <span class="o">+</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_numeric</span><span class="p">(</span><span class="n">LoL_teams</span><span class="p">[</span><span class="s1">&#39;rResult&#39;</span><span class="p">]))</span>
+<span class="n">LoL_teams</span><span class="o">=</span><span class="n">LoL_teams</span><span class="p">[</span><span class="n">LoL_teams</span><span class="o">.</span><span class="n">win_percent</span> <span class="o">!=</span> <span class="mi">1</span><span class="p">]</span>
+<span class="n">LoL_teams</span><span class="o">=</span><span class="n">LoL_teams</span><span class="p">[</span><span class="n">LoL_teams</span><span class="o">.</span><span class="n">win_percent</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">]</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;kills per game vs Win_percentage&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;kills&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Win_percentage&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">LoL_teams</span><span class="o">.</span><span class="n">kills</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">LoL_teams</span><span class="o">.</span><span class="n">win_percent</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<span class="n">LoL_teams</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+<div class="prompt"></div>
+
+
+
+
+<div class="output_png output_subarea ">
+<img src="data:image/png;base64,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
+"
+>
+</div>
+
+</div>
+
+<div class="output_area">
+
+<div class="prompt output_prompt">Out[25]:</div>
+
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>blueTeamTag</th>
+      <th>bResult</th>
+      <th>rResult</th>
+      <th>kills</th>
+      <th>win_percent</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>1</th>
+      <td>17A</td>
+      <td>1</td>
+      <td>3</td>
+      <td>26.000000</td>
+      <td>0.250000</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>7h</td>
+      <td>18</td>
+      <td>17</td>
+      <td>22.742857</td>
+      <td>0.514286</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>A</td>
+      <td>6</td>
+      <td>11</td>
+      <td>30.294118</td>
+      <td>0.352941</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>AE</td>
+      <td>15</td>
+      <td>23</td>
+      <td>28.552632</td>
+      <td>0.394737</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>AF</td>
+      <td>3</td>
+      <td>1</td>
+      <td>18.750000</td>
+      <td>0.750000</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>AFR</td>
+      <td>1</td>
+      <td>1</td>
+      <td>19.500000</td>
+      <td>0.500000</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>AFs</td>
+      <td>65</td>
+      <td>46</td>
+      <td>21.594595</td>
+      <td>0.585586</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>AHQ</td>
+      <td>16</td>
+      <td>15</td>
+      <td>24.903226</td>
+      <td>0.516129</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>ANC</td>
+      <td>12</td>
+      <td>14</td>
+      <td>28.538462</td>
+      <td>0.461538</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>ANX</td>
+      <td>15</td>
+      <td>4</td>
+      <td>22.526316</td>
+      <td>0.789474</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>APX</td>
+      <td>14</td>
+      <td>14</td>
+      <td>24.607143</td>
+      <td>0.500000</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>AS</td>
+      <td>4</td>
+      <td>9</td>
+      <td>26.692308</td>
+      <td>0.307692</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>AUR</td>
+      <td>42</td>
+      <td>25</td>
+      <td>31.104478</td>
+      <td>0.626866</td>
+    </tr>
+    <tr>
+      <th>16</th>
+      <td>AV</td>
+      <td>30</td>
+      <td>29</td>
+      <td>28.355932</td>
+      <td>0.508475</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>B2K</td>
+      <td>3</td>
+      <td>9</td>
+      <td>26.666667</td>
+      <td>0.250000</td>
+    </tr>
+    <tr>
+      <th>18</th>
+      <td>BC</td>
+      <td>1</td>
+      <td>8</td>
+      <td>26.000000</td>
+      <td>0.111111</td>
+    </tr>
+    <tr>
+      <th>19</th>
+      <td>BE</td>
+      <td>1</td>
+      <td>9</td>
+      <td>14.200000</td>
+      <td>0.100000</td>
+    </tr>
+    <tr>
+      <th>20</th>
+      <td>BGG</td>
+      <td>1</td>
+      <td>6</td>
+      <td>30.571429</td>
+      <td>0.142857</td>
+    </tr>
+    <tr>
+      <th>21</th>
+      <td>BJK</td>
+      <td>33</td>
+      <td>21</td>
+      <td>28.462963</td>
+      <td>0.611111</td>
+    </tr>
+    <tr>
+      <th>24</th>
+      <td>BPI</td>
+      <td>2</td>
+      <td>5</td>
+      <td>32.142857</td>
+      <td>0.285714</td>
+    </tr>
+    <tr>
+      <th>25</th>
+      <td>C9</td>
+      <td>90</td>
+      <td>63</td>
+      <td>24.986928</td>
+      <td>0.588235</td>
+    </tr>
+    <tr>
+      <th>27</th>
+      <td>CA</td>
+      <td>4</td>
+      <td>3</td>
+      <td>30.428571</td>
+      <td>0.571429</td>
+    </tr>
+    <tr>
+      <th>29</th>
+      <td>CG</td>
+      <td>2</td>
+      <td>1</td>
+      <td>22.666667</td>
+      <td>0.666667</td>
+    </tr>
+    <tr>
+      <th>30</th>
+      <td>CGE</td>
+      <td>1</td>
+      <td>15</td>
+      <td>24.812500</td>
+      <td>0.062500</td>
+    </tr>
+    <tr>
+      <th>31</th>
+      <td>CHF</td>
+      <td>46</td>
+      <td>21</td>
+      <td>26.104478</td>
+      <td>0.686567</td>
+    </tr>
+    <tr>
+      <th>32</th>
+      <td>CJ</td>
+      <td>14</td>
+      <td>9</td>
+      <td>22.391304</td>
+      <td>0.608696</td>
+    </tr>
+    <tr>
+      <th>33</th>
+      <td>CJE</td>
+      <td>39</td>
+      <td>41</td>
+      <td>24.037500</td>
+      <td>0.487500</td>
+    </tr>
+    <tr>
+      <th>35</th>
+      <td>CLG</td>
+      <td>92</td>
+      <td>62</td>
+      <td>27.422078</td>
+      <td>0.597403</td>
+    </tr>
+    <tr>
+      <th>36</th>
+      <td>CLK</td>
+      <td>10</td>
+      <td>25</td>
+      <td>28.285714</td>
+      <td>0.285714</td>
+    </tr>
+    <tr>
+      <th>37</th>
+      <td>CNB</td>
+      <td>13</td>
+      <td>21</td>
+      <td>22.205882</td>
+      <td>0.382353</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>204</th>
+      <td>TL</td>
+      <td>76</td>
+      <td>57</td>
+      <td>25.616541</td>
+      <td>0.571429</td>
+    </tr>
+    <tr>
+      <th>206</th>
+      <td>TM</td>
+      <td>14</td>
+      <td>40</td>
+      <td>27.203704</td>
+      <td>0.259259</td>
+    </tr>
+    <tr>
+      <th>207</th>
+      <td>TPA</td>
+      <td>24</td>
+      <td>18</td>
+      <td>25.714286</td>
+      <td>0.571429</td>
+    </tr>
+    <tr>
+      <th>208</th>
+      <td>TRC</td>
+      <td>1</td>
+      <td>1</td>
+      <td>26.500000</td>
+      <td>0.500000</td>
+    </tr>
+    <tr>
+      <th>209</th>
+      <td>TRI</td>
+      <td>6</td>
+      <td>6</td>
+      <td>24.666667</td>
+      <td>0.500000</td>
+    </tr>
+    <tr>
+      <th>211</th>
+      <td>TSM</td>
+      <td>104</td>
+      <td>42</td>
+      <td>25.109589</td>
+      <td>0.712329</td>
+    </tr>
+    <tr>
+      <th>213</th>
+      <td>TT</td>
+      <td>25</td>
+      <td>20</td>
+      <td>26.088889</td>
+      <td>0.555556</td>
+    </tr>
+    <tr>
+      <th>215</th>
+      <td>TY</td>
+      <td>1</td>
+      <td>4</td>
+      <td>24.600000</td>
+      <td>0.200000</td>
+    </tr>
+    <tr>
+      <th>216</th>
+      <td>UOL</td>
+      <td>65</td>
+      <td>57</td>
+      <td>27.885246</td>
+      <td>0.532787</td>
+    </tr>
+    <tr>
+      <th>217</th>
+      <td>USG</td>
+      <td>23</td>
+      <td>15</td>
+      <td>22.868421</td>
+      <td>0.605263</td>
+    </tr>
+    <tr>
+      <th>218</th>
+      <td>VEG</td>
+      <td>22</td>
+      <td>16</td>
+      <td>24.105263</td>
+      <td>0.578947</td>
+    </tr>
+    <tr>
+      <th>219</th>
+      <td>VFK</td>
+      <td>15</td>
+      <td>5</td>
+      <td>19.700000</td>
+      <td>0.750000</td>
+    </tr>
+    <tr>
+      <th>220</th>
+      <td>VIT</td>
+      <td>29</td>
+      <td>28</td>
+      <td>22.508772</td>
+      <td>0.508772</td>
+    </tr>
+    <tr>
+      <th>221</th>
+      <td>VK</td>
+      <td>1</td>
+      <td>1</td>
+      <td>13.500000</td>
+      <td>0.500000</td>
+    </tr>
+    <tr>
+      <th>222</th>
+      <td>VP</td>
+      <td>13</td>
+      <td>11</td>
+      <td>25.875000</td>
+      <td>0.541667</td>
+    </tr>
+    <tr>
+      <th>223</th>
+      <td>VS</td>
+      <td>16</td>
+      <td>18</td>
+      <td>28.411765</td>
+      <td>0.470588</td>
+    </tr>
+    <tr>
+      <th>224</th>
+      <td>WE</td>
+      <td>16</td>
+      <td>8</td>
+      <td>23.916667</td>
+      <td>0.666667</td>
+    </tr>
+    <tr>
+      <th>225</th>
+      <td>WFX</td>
+      <td>6</td>
+      <td>5</td>
+      <td>30.727273</td>
+      <td>0.545455</td>
+    </tr>
+    <tr>
+      <th>227</th>
+      <td>WS</td>
+      <td>10</td>
+      <td>16</td>
+      <td>21.230769</td>
+      <td>0.384615</td>
+    </tr>
+    <tr>
+      <th>228</th>
+      <td>Winners</td>
+      <td>1</td>
+      <td>1</td>
+      <td>34.000000</td>
+      <td>0.500000</td>
+    </tr>
+    <tr>
+      <th>229</th>
+      <td>X5</td>
+      <td>1</td>
+      <td>10</td>
+      <td>30.636364</td>
+      <td>0.090909</td>
+    </tr>
+    <tr>
+      <th>230</th>
+      <td>XG</td>
+      <td>14</td>
+      <td>33</td>
+      <td>24.234043</td>
+      <td>0.297872</td>
+    </tr>
+    <tr>
+      <th>232</th>
+      <td>YC</td>
+      <td>1</td>
+      <td>3</td>
+      <td>13.500000</td>
+      <td>0.250000</td>
+    </tr>
+    <tr>
+      <th>234</th>
+      <td>ZONE</td>
+      <td>2</td>
+      <td>5</td>
+      <td>42.428571</td>
+      <td>0.285714</td>
+    </tr>
+    <tr>
+      <th>235</th>
+      <td>ZTG</td>
+      <td>12</td>
+      <td>17</td>
+      <td>24.206897</td>
+      <td>0.413793</td>
+    </tr>
+    <tr>
+      <th>236</th>
+      <td>ahq</td>
+      <td>76</td>
+      <td>20</td>
+      <td>24.979167</td>
+      <td>0.791667</td>
+    </tr>
+    <tr>
+      <th>238</th>
+      <td>bbq</td>
+      <td>26</td>
+      <td>24</td>
+      <td>19.000000</td>
+      <td>0.520000</td>
+    </tr>
+    <tr>
+      <th>239</th>
+      <td>g3x</td>
+      <td>1</td>
+      <td>6</td>
+      <td>31.142857</td>
+      <td>0.142857</td>
+    </tr>
+    <tr>
+      <th>240</th>
+      <td>kt</td>
+      <td>101</td>
+      <td>62</td>
+      <td>23.785276</td>
+      <td>0.619632</td>
+    </tr>
+    <tr>
+      <th>241</th>
+      <td>yoeFW</td>
+      <td>6</td>
+      <td>2</td>
+      <td>26.625000</td>
+      <td>0.750000</td>
+    </tr>
+  </tbody>
+</table>
+<p>205 rows × 5 columns</p>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Hmmm just by looking at the graphs we can see that the trends in the second and thrid visualization
+are not the same as the first visualization. This is what some of you expected though already.
+Data tells stories and some stories are more full and rich than others. Essentially, the second and
+third stories were the first one with pages ripped out. The information present (or richness)
+is shown by how much x explains y in a scatter plot linear regression shown below. The best 
+indication of the fullness of an explanation is the r_value shown below</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[7]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">LoL</span><span class="p">[</span><span class="s1">&#39;finalgolddiff&#39;</span><span class="p">]</span><span class="o">=</span><span class="n">x</span>
+<span class="n">LoL_teams</span> <span class="o">=</span> <span class="n">LoL</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s1">&#39;blueTeamTag&#39;</span><span class="p">],</span> <span class="n">as_index</span><span class="o">=</span><span class="kc">False</span><span class="p">)[</span><span class="s1">&#39;bResult&#39;</span><span class="p">,</span> <span class="s1">&#39;rResult&#39;</span><span class="p">,</span><span class="s1">&#39;finalgolddiff&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+<span class="n">LoL_teams</span><span class="p">[</span><span class="s1">&#39;finalgolddiff&#39;</span><span class="p">]</span><span class="o">=</span><span class="n">pd</span><span class="o">.</span><span class="n">to_numeric</span><span class="p">(</span><span class="n">LoL_teams</span><span class="p">[</span><span class="s1">&#39;finalgolddiff&#39;</span><span class="p">])</span> <span class="o">/</span> <span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">to_numeric</span><span class="p">(</span><span class="n">LoL_teams</span><span class="p">[</span><span class="s1">&#39;bResult&#39;</span><span class="p">])</span> <span class="o">+</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_numeric</span><span class="p">(</span><span class="n">LoL_teams</span><span class="p">[</span><span class="s1">&#39;rResult&#39;</span><span class="p">]))</span>
+<span class="n">LoL_teams</span><span class="p">[</span><span class="s1">&#39;win_percent&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_numeric</span><span class="p">(</span><span class="n">LoL_teams</span><span class="p">[</span><span class="s1">&#39;bResult&#39;</span><span class="p">])</span> <span class="o">/</span> <span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">to_numeric</span><span class="p">(</span><span class="n">LoL_teams</span><span class="p">[</span><span class="s1">&#39;bResult&#39;</span><span class="p">])</span> <span class="o">+</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_numeric</span><span class="p">(</span><span class="n">LoL_teams</span><span class="p">[</span><span class="s1">&#39;rResult&#39;</span><span class="p">]))</span>
+<span class="n">LoL_teams</span><span class="o">=</span><span class="n">LoL_teams</span><span class="p">[</span><span class="n">LoL_teams</span><span class="o">.</span><span class="n">win_percent</span> <span class="o">!=</span> <span class="mi">1</span><span class="p">]</span>
+<span class="n">LoL_teams</span><span class="o">=</span><span class="n">LoL_teams</span><span class="p">[</span><span class="n">LoL_teams</span><span class="o">.</span><span class="n">win_percent</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">]</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Finalgolddiff vs Win_percentage&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;golddiff&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Win_percentage&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">LoL_teams</span><span class="o">.</span><span class="n">finalgolddiff</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">LoL_teams</span><span class="o">.</span><span class="n">win_percent</span><span class="p">)</span>
+<span class="n">slope</span><span class="p">,</span> <span class="n">intercept</span><span class="p">,</span> <span class="n">r_value</span><span class="p">,</span> <span class="n">p_value</span><span class="p">,</span> <span class="n">std_err</span> <span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="n">linregress</span><span class="p">(</span><span class="n">LoL_teams</span><span class="o">.</span><span class="n">finalgolddiff</span><span class="p">,</span><span class="n">LoL_teams</span><span class="o">.</span><span class="n">win_percent</span><span class="p">)</span>
+<span class="n">min_x</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="nb">min</span><span class="p">(</span><span class="n">LoL_teams</span><span class="o">.</span><span class="n">finalgolddiff</span><span class="p">))</span>
+<span class="n">min_y</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">min_x</span><span class="p">)</span><span class="o">*</span><span class="nb">float</span><span class="p">(</span><span class="n">slope</span><span class="p">)</span> <span class="o">+</span> <span class="nb">float</span><span class="p">(</span><span class="n">intercept</span><span class="p">)</span>
+<span class="n">max_x</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="n">LoL_teams</span><span class="o">.</span><span class="n">finalgolddiff</span><span class="p">))</span>
+<span class="n">max_y</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">max_x</span><span class="p">)</span><span class="o">*</span><span class="nb">float</span><span class="p">(</span><span class="n">slope</span><span class="p">)</span> <span class="o">+</span> <span class="nb">float</span><span class="p">(</span><span class="n">intercept</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="n">min_x</span><span class="p">,</span> <span class="n">max_x</span><span class="p">],</span> <span class="p">[</span><span class="n">min_y</span><span class="p">,</span> <span class="n">max_y</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<span class="n">slope</span><span class="p">,</span> <span class="n">intercept</span><span class="p">,</span> <span class="n">r_value</span><span class="p">,</span> <span class="n">p_value</span><span class="p">,</span> <span class="n">std_err</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+<div class="prompt"></div>
+
+
+
+
+<div class="output_png output_subarea ">
+<img src="data:image/png;base64,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
+"
+>
+</div>
+
+</div>
+
+<div class="output_area">
+
+<div class="prompt output_prompt">Out[7]:</div>
+
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>(3.4212639957723435e-05,
+ 0.51054155563061276,
+ 0.9180958502584784,
+ 1.5713058356895277e-83,
+ 1.036665509798702e-06)</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Python has many more tools to offer shown below, I encourge you not only to start coding, but also build a
+strong background in statistics for the future</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[27]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#import seaborn as sns</span>
+<span class="c1">#from sklearn import model_selection</span>
+<span class="c1">#from sklearn import linear_model</span>
+<span class="c1">#import statsmodels.formula.api as smf</span>
+</pre></div>
+
+</div>
 </div>
 </div>
 
